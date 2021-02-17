@@ -1,0 +1,71 @@
+<html  xmlns:th="http://www.thymeleaf.org" 
+       th:replace="base::layout(~{::section})">        
+ 
+
+<section >
+
+  <div class="conatiner" >
+    <div class="row">
+    
+     
+      <div class="col-md-6 offset-md-3" >
+        
+         <div class="my-card mt-2" >
+         
+         <div class="conatiner text-center" >
+             <img alt="register" th:src="@{/image/forbidden.png}" style="width: 100px;" />
+         </div>
+         
+         
+         
+            <h1 class="text-center">Register Here !!!</h1>
+            <form  th:action="@{/do_register}" method="post">
+
+						<!-- name  -->
+						<div class="form-group">
+							<label for="name"> Name:</label> <input type="text"
+								class="form-control" id="name" placeholder="Enter your name"
+								required />
+						</div>
+						<!-- email  -->
+						<div class="form-group">
+							<label for="email">Email:</label> <input type="email"
+								class="form-control" id="email" placeholder="Enter your email"
+								required />
+						</div>
+						<!-- password  -->
+						<div class="form-group">
+							<label for="password">Password:</label> <input type="password"
+								class="form-control" id="password" placeholder="Enter your password"
+								required />
+						</div>
+						<!-- Description  -->
+						<div class="form-group">
+						    <label for="about">About:</label>
+							<textarea class="form-control" rows="6"  placeholder="Enter the description"></textarea>
+						</div>
+						
+                        <div class="container text-center">
+                           <button class="btn btn-primary" type="submit">
+                              Submit
+                           </button>
+                            <button class="btn btn-warning text-white" type="reset">
+                              Reset
+                           </button>
+                        
+                        </div>
+
+
+					</form>
+         
+         
+         </div>
+      
+      </div>
+    
+    </div>
+  </div>  
+ 
+</section>
+
+</html> 

@@ -17,10 +17,23 @@ import com.smart.entities.User;
 public class HomeController
 {
 	
-	@RequestMapping("/home")
+	@RequestMapping("/")
 	public String home(Model model){
 		model.addAttribute("title","Home - Contact manager");
 		return "home";
+	}
+	
+	@RequestMapping("/about")
+	public String about(Model model){
+		model.addAttribute("title","About - Contact manager");
+		return "about";
+	}
+	
+	
+	@RequestMapping("/signup")
+	public String signUp(Model model){
+		model.addAttribute("title","Register - Contact manager");
+		return "signup";
 	}
 	
 	

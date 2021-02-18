@@ -2,10 +2,12 @@ package com.smart.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.smart.dao.UserRepository;
@@ -33,8 +35,14 @@ public class HomeController
 	@RequestMapping("/signup")
 	public String signUp(Model model){
 		model.addAttribute("title","Register - Contact manager");
+		model.addAttribute("user",new User());
 		return "signup";
 	}
 	
+	@RequestMapping(value="/do_register", method= RequestMethod.POST)
+	public String registerUser()
+	{
+		return "signup";
+	}
 	
 }

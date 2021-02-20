@@ -2,11 +2,13 @@ package com.smart.controller;
 
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +52,11 @@ public class HomeController
 	}
 	
 	@RequestMapping(value="/do_register", method= RequestMethod.POST)		      
-	public String registerUser( @ModelAttribute ("user") User user,
+	public String registerUser(@Valid @ModelAttribute ("user") User user,BindingResult results,
 		                       @RequestParam(value="agreement",defaultValue = "false") boolean agreement,
-		                       Model model,HttpSession session)
+		                       Model model, HttpSession session)
 	{
-		
+	
 		try
 		{
 			
@@ -63,6 +65,16 @@ public class HomeController
 				System.out.println("You have not agreed the terms and conditions !!");
 				throw new Exception("You have not agreed the terms and conditions !!!!!!");
 			}
+			
+			
+			
+			if(results.hasErrors())
+			{
+				System.out.println("Error "+results.toString());
+				model.addAttribute("user",user);
+				return "signup";
+			}
+			
 			
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
@@ -74,8 +86,12 @@ public class HomeController
 			
 			User result = this.userRepository.save(user);
 			
+			//user form fields empty
+			//A model will be destroyed after processing an request
 			model.addAttribute("user",new User());
 			
+			
+			//data remain in session
             session.setAttribute("message",new Message("Successfully Registred", "alert-success"));
 			
 			return "signup";

@@ -28,14 +28,24 @@
          
          
            
-            <form  th:action="@{/do_register}" method="post" th:object="${user}">
+            <form novalidate  th:action="@{/do_register}" method="post" th:object="${user}">
 
 						<!-- name  -->
 						<div class="form-group">
-							<label for="name"> Name:</label> <input type="text"
-								class="form-control" name="name" id="name" placeholder="Enter your name"
+							<label for="name"> Name:</label> 
+							  <input type="text"
+								class="form-control " 
+								
+								name="name" 
+								id="name" 
+								placeholder="Enter your name"
 								required
 								th:value="${user.name}" />
+								
+								<div class="invalid-feedback" th:each="e : ${#fields.errors('name')}" th:text="${e}">
+                                   
+                                </div>
+								
 						</div>
 						<!-- email  -->
 						<div class="form-group">

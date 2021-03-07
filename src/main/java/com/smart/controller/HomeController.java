@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,10 +28,20 @@ public class HomeController
 {
 	
 	@Autowired
+	private BCryptPasswordEncoder passwordEncode;
+	
+	
+	@Autowired
 	private UserRepository userRepository;
 	
 	
+	@RequestMapping("/signin")
+	public String login(Model model){
+		model.addAttribute("title","Login - Contact manager");
+		return "login";
+	}
 	
+
 	@RequestMapping("/")
 	public String home(Model model){
 		model.addAttribute("title","Home - Contact manager");
@@ -78,7 +89,8 @@ public class HomeController
 			
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
-			
+			user.setImageUrl("default.jpg");
+			user.setPassword(passwordEncode.encode(user.getPassword()));
 			
 			
 			System.out.println("agreement" +agreement);

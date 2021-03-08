@@ -21,7 +21,7 @@ public class CustomUserDetails implements UserDetails
 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		SimpleGrantedAuthority auth = new SimpleGrantedAuthority(user.getRole());
-		return Arrays.asList(auth);
+		return Arrays.asList(auth); //java 9 List.of()
 	}
 
 	public String getPassword() {

@@ -71,6 +71,7 @@ public class HomeController
 		try
 		{
 			
+			//if user doesnt click on agreement  exception thrown
 			if(!agreement)
 			{
 				System.out.println("You have not agreed the terms and conditions !!");
@@ -78,7 +79,7 @@ public class HomeController
 			}
 			
 			
-			
+			//hibernate errors
 			if(results.hasErrors())
 			{
 				System.out.println("Error "+results.toString());
@@ -90,6 +91,8 @@ public class HomeController
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
 			user.setImageUrl("default.jpg");
+			
+			//password encrypted here
 			user.setPassword(passwordEncode.encode(user.getPassword()));
 			
 			

@@ -33,7 +33,7 @@
                            
                            </div>
                            
-                           <input type="text" id="firstName" name="cName" placeholder="Enter name here" class="form-control" />
+                           <input required type="text" id="firstName" name="cName" placeholder="Enter name here" class="form-control" />
                                      
                         </div>
                         
@@ -48,7 +48,7 @@
                            
                            </div>
                            
-                           <input type="text" id="secondName" name="secondName" placeholder="Enter second name" class="form-control" />
+                           <input required type="text" id="secondName" name="secondName" placeholder="Enter second name" class="form-control" />
                                      
                         </div>
                         
@@ -63,7 +63,7 @@
                            
                            </div>
                            
-                           <input type="number" id="Phone" name="Phone" placeholder="Enter Phone" class="form-control" />
+                           <input required type="number" id="Phone" name="Phone" placeholder="Enter Phone" class="form-control" />
                                      
                         </div>
                         
@@ -78,7 +78,7 @@
                            
                            </div>
                            
-                           <input type="text" id="email" name="email" placeholder="Enter email" class="form-control" />
+                           <input required type="text" id="email" name="email" placeholder="Enter email" class="form-control" />
                                      
                         </div>
                         
@@ -92,7 +92,7 @@
                            
                            </div>
                            
-                           <input type="text" id="work" name="work" placeholder="Enter work" class="form-control" />
+                           <input required type="text" id="work" name="work" placeholder="Enter work" class="form-control" />
                                      
                         </div>
                         
@@ -100,8 +100,8 @@
                         
                            <div class="form-group mt-3">
                                  
-                                 <textarea rows="10" id="cDescription" name="cDescription" 
-                                     placeholder="Enter Description..."  class="form-control"></textarea>
+                                 <textarea id="mytextarea" rows="10"  name="cDescription" 
+                                     placeholder="Enter Description..."  class="form-control" required></textarea>
                         
                           </div>
                           
@@ -133,6 +133,15 @@
     </div>
  
  </div>
+ 
+ <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+ 
+ 
+  <script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+    </script>
  
 </section>
 

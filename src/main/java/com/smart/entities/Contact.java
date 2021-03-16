@@ -21,7 +21,10 @@ public class Contact
 	private String work;
 	private String email;
 	private String Phone;
+	
 	private String cImageURL;
+	
+	
 	@Column(length=500)
 	private String cDescription;
 	
@@ -114,6 +117,11 @@ public class Contact
 	public void setcDescription(String cDescription) {
 		this.cDescription = cDescription;
 	}
+
+
+
+
+
 	
 	
 

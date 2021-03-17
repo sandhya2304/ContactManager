@@ -1,20 +1,27 @@
 package com.smart.controller;
 
+
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.smart.Helper.Message;
+import com.smart.dao.ContactRepository;
 import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
@@ -32,6 +40,9 @@ public class UserController
 {
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
 	
 	
 	//method for adding common data to response
@@ -130,9 +141,28 @@ public class UserController
 		return "normal/add_contact_form";
 	}
 	
-	
-	
-	
+	@GetMapping(value="/show-contacts/{page}")
+	public String showContacts(@PathVariable("page")Integer page ,Model model,Principal principal)
+	{
+		model.addAttribute("title","Show All");
+		
+		String name = principal.getName();
+		 User user = this.userRepository.getUserByUsername(name);
+		
+		 
+		 // pagination
+        Pageable pageable = PageRequest.of(page, 2);
+		
+		Page<Contact> contacts = this.contactRepository.findContactsByUser(user.getUserId(),pageable);
+		
+		//showing all contacts
+		model.addAttribute("contacts",contacts);
+		model.addAttribute("currentPage", page);
+		
+		model.addAttribute("totalPages",contacts.getTotalPages());
+		
+		return "normal/show-contacts";
+	}
 	
 	
 	

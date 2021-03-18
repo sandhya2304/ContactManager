@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,11 +29,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import com.smart.Helper.Message;
 import com.smart.dao.ContactRepository;
 import com.smart.dao.UserRepository;
 import com.smart.entities.Contact;
 import com.smart.entities.User;
+
 
 @Controller
 @RequestMapping(value="/user")
@@ -97,6 +100,10 @@ public class UserController
 		if(file.isEmpty())
 		{
 			System.out.println("File is empty...");
+			
+			//default image set
+			contact.setcImageURL("image1.png");
+			
 		}else{
 			
 			//upload the file to folder and update the name in contacts
@@ -151,7 +158,7 @@ public class UserController
 		
 		 
 		 // pagination
-        Pageable pageable = PageRequest.of(page, 2);
+        Pageable pageable = PageRequest.of(page, 5);
 		
 		Page<Contact> contacts = this.contactRepository.findContactsByUser(user.getUserId(),pageable);
 		
@@ -164,6 +171,30 @@ public class UserController
 		return "normal/show-contacts";
 	}
 	
+	//show particular contact details
+	@GetMapping(value="/{cid}/contact")
+	public String showSingleContact(@PathVariable("cid") Integer cid,Model model,Principal principal){
+		
+		System.out.println("Cid.."+cid);
+		
+		
+		 Optional<Contact> contactsOpt  = this.contactRepository.findById(cid);
+		 
+		 Contact contact = contactsOpt.get();
+		 
+		 String name =principal.getName();
+		 User username = this.userRepository.getUserByUsername(name);
+		 
+		 if(username.getUserId() == contact.getUser().getUserId())
+		 {
+			 model.addAttribute("contact",contact);
+			 model.addAttribute("title",contact.getcName());
+		 }
+		 
+		
+		
+		return "normal/contact-details";
+	}
 	
 	
 	

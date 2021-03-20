@@ -198,7 +198,7 @@ public class UserController
 	
 	//Delete contact handler
 	@GetMapping("/delete/{cid}")
-	public String deleteContact(@PathVariable ("cid") Integer cid,Mode model,HttpSession session)
+	public String deleteContact(@PathVariable ("cid") Integer cid,HttpSession session)
 	{
 	  Contact contact	= this.contactRepository.findById(cid).get();
 	 
@@ -221,6 +221,18 @@ public class UserController
 	}
 	
 	
+	//edit contact
+	@PostMapping("/edit-contact/{cid}")
+	public String openEditContact(@PathVariable ("cid") Integer cid,Model model)
+	{
+			
+		model.addAttribute("title","update Contact");
+		
+		Optional<Contact> contact = this.contactRepository.findById(cid);
+		model.addAttribute("contact",contact.get());
+		
+		return "normal/update-form";
+	}
 	
 	
 	

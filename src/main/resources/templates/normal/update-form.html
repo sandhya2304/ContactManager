@@ -1,0 +1,160 @@
+<html  xmlns:th="http://www.thymeleaf.org" 
+       th:replace="normal/base::layout(~{::section})">        
+ 
+
+<section >
+
+   <div class="card mr-3">
+    <div class="card-body">
+       
+       <h1 class="text-center">Update Contact</h1>
+       
+           <div class="container-fluid mt-1">
+           
+                <div class="row">
+                   
+                    <div class="col-md-10 offset-md-1">
+                    
+                        <form action="#"
+                             th:object="${contact}"
+                             enctype="multipart/form-data"
+                             method="post"
+                             th:action="@{/user/process-update}"
+                             class="mt-2"
+                        >
+                        <!--  Firstname -->
+                       
+                        <div class="input-group">
+                           <div class="input-group-prepend">
+                               <div class="input-group-text">
+                                  <i class="fa fa-plus"></i>
+                               
+                               </div>
+                           
+                           </div>
+                           
+                           <input required type="text" 
+                                       id="firstName" 
+                                       name="cName" 
+                                       placeholder="Enter name here" 
+                                       class="form-control"
+                                       th:value="${contact.cName}"
+                                        />
+                                     
+                        </div>
+                        
+                        <!--  second name -->
+                        
+                        <div class="input-group mt-3">
+                           <div class="input-group-prepend">
+                               <div class="input-group-text">
+                                  <i class="fa fa-user-alt"></i>
+                               
+                               </div>
+                           
+                           </div>
+                           
+                           <input required type="text" 
+                                   id="secondName" 
+                                   name="secondName" 
+                                   placeholder="Enter second name" 
+                                   class="form-control" 
+                                    th:value="${contact.secondName}"
+                                   />
+                                     
+                        </div>
+                        
+                        <!-- Phone  -->
+                        
+                        <div class="input-group mt-3">
+                           <div class="input-group-prepend">
+                               <div class="input-group-text">
+                                  <i class="fa fa-Phone"></i>
+                               
+                               </div>
+                           
+                           </div>
+                           
+                           <input required type="number" id="Phone" 
+                           name="Phone" placeholder="Enter Phone" class="form-control"  th:value="${contact.Phone}" />
+                                     
+                        </div>
+                        
+                        <!-- Email  -->
+                        
+                        <div class="input-group mt-3">
+                           <div class="input-group-prepend">
+                               <div class="input-group-text">
+                                 @
+                               
+                               </div>
+                           
+                           </div>
+                           
+                           <input required type="text" id="email" 
+                              name="email" placeholder="Enter email" class="form-control"  th:value="${contact.email}" />
+                                     
+                        </div>
+                        
+                        <!-- Work  -->
+                        
+                        <div class="input-group mt-3">
+                           <div class="input-group-prepend">
+                               <div class="input-group-text">
+                                  <i class="fa fa-briefcase"></i>
+                               </div>
+                           
+                           </div>
+                           
+                           <input required type="text" id="work" 
+                             name="work" placeholder="Enter work" class="form-control"  th:value="${contact.work}" />
+                                     
+                        </div>
+                        
+                        <!-- descritpion -->
+                        
+                           <div class="form-group mt-3">
+                                 
+                                 <textarea  th:text="${contact.cDescription}" id="mytextarea" rows="10"  name="cDescription" 
+                                     placeholder="Enter Description..."  class="form-control" required></textarea>
+                        
+                          </div>
+                          
+                          <!-- image -->
+                          
+                          <div class="container text-center ">
+                             <img style="width: 250px; height: 250px;" class="img-fluid my_profile_pic" alt="" src="" th:src="@{'/image/'+${contact.cImageURL}}">
+                          </div>
+                          
+                          <p class=""> Choose new Profile Pic </p>
+                          
+                          <div class="custom-file">
+                          
+                              <input type="file" name="profile" />
+                          
+                          </div>
+                          
+                          <div class="container text-center">
+                             <button class="btn btn-outline-success">Save Contact</button>
+                          </div>
+                          
+                        
+                        
+                        </form>
+                    
+                    
+                    </div>
+                
+                
+                </div>
+           
+           
+           </div>
+    
+    </div>
+ 
+ </div>
+ 
+</section>
+
+</html> 

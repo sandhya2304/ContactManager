@@ -196,6 +196,38 @@ public class UserController
 		return "normal/contact-details";
 	}
 	
+	//Delete contact handler
+	@GetMapping("/delete/{cid}")
+	public String deleteContact(@PathVariable ("cid") Integer cid,Mode model,HttpSession session)
+	{
+	  Contact contact	= this.contactRepository.findById(cid).get();
+	 
+	  
+	  
+	  //check if user contact id then delete only for security
+	   //System.out.print("contact",contact.getcID());
+	  
+	    //before delete set conatct null so that it deascoicate with the user before delete
+	     contact.setUser(null);
+	     
+	     //remove photo also beofre delete
+	     //contact.getcImageURL();
+	     
+	     this.contactRepository.delete(contact);
+	     
+	     session.setAttribute("msg",new Message("Contact Delete", "success"));
+		
+		return "redirect:/user/show-contacts/0";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

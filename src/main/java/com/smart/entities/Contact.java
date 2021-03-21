@@ -121,6 +121,15 @@ public class Contact
 
 
 
+	@Override
+	public boolean equals(Object obj) {
+		
+		return this.cID == ((Contact)obj).getcID();
+	}
+
+
+
+
 
 	
 	

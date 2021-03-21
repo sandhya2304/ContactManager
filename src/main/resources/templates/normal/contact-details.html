@@ -51,7 +51,9 @@
   
   <div class="container">
       
-        <button class="btn btn-primary btn-block">Edit</button>
+         <form method="post" th:action="@{'/user/edit-contact/'+${contact.cID}}" class="mt-2">
+						       <button type="submit"  class="btn btn-primary btn-block">Edit</button>
+						  </form>  
 		<button th:onClick="|deleteContact(${contact.cID})|" class="btn btn-danger btn-block">Delete</button>
   
   </div>

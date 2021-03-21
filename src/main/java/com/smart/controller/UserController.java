@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -198,14 +199,14 @@ public class UserController
 	
 	//Delete contact handler
 	@GetMapping("/delete/{cid}")
-	public String deleteContact(@PathVariable ("cid") Integer cid,HttpSession session)
+	public String deleteContact(@PathVariable ("cid") Integer cid,HttpSession session,Principal principal)
 	{
 	  Contact contact	= this.contactRepository.findById(cid).get();
 	 
 	  
 	  
 	  //check if user contact id then delete only for security
-	   //System.out.print("contact",contact.getcID());
+	   System.out.print("contact"+contact.getcID());
 	  
 	    //before delete set conatct null so that it deascoicate with the user before delete
 	     contact.setUser(null);
@@ -213,7 +214,13 @@ public class UserController
 	     //remove photo also beofre delete
 	     //contact.getcImageURL();
 	     
-	     this.contactRepository.delete(contact);
+	    // this.contactRepository.delete(contact);
+	     
+	     
+	     User user = this.userRepository.getUserByUsername(principal.getName());
+	     user.getContacts().remove(contact);
+	     this.userRepository.save(user);
+	     
 	     
 	     session.setAttribute("msg",new Message("Contact Delete", "success"));
 		
@@ -235,10 +242,67 @@ public class UserController
 	}
 	
 	
-	
-	
-	
-	
+	//update Contact
+	@RequestMapping(value="/process-update",method=RequestMethod.POST)
+	public String updateContact(@ModelAttribute Contact contact,
+			                @RequestParam("profile")MultipartFile file,
+			                Model model,HttpSession session,Principal principal)
+	{
+		
+		//old contact details
+		Contact oldContactDetail = this.contactRepository.findById(contact.getcID()).get();
+		
+		
+		try{
+			
+			if(!file.isEmpty())
+			{
+				
+				//delete old photo
+				File deleteFile = new ClassPathResource("/static/image").getFile();
+				File file1 = new File(deleteFile,oldContactDetail.getcImageURL());
+				
+				file1.delete();
+				
+				
+				//update new photo
+				
+				File saveFile = new ClassPathResource("/static/image").getFile();
+				
+				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				
+				
+				//file jis naam se save hogi vhi hume contact k db mein use krna h
+				contact.setcImageURL(file.getOriginalFilename());
+				
+				
+			}else{
+				//agr file empty to humne purane detail ki new mein dal diya h
+				
+				contact.setcImageURL(oldContactDetail.getcImageURL());
+			}
+			
+		 User user = this.userRepository.getUserByUsername(principal.getName());
+		 contact.setUser(user);
+			
+			
+			this.contactRepository.save(contact);
+			
+			session.setAttribute("msg",new Message("your contact is updated","success"));
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println("Contact..."+contact.getcName());
+		
+		
+		//single page contact url
+		return "redirect:/user/"+contact.getcID()+"/contact";
+	}
 	
 	
 	

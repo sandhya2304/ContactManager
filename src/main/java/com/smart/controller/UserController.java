@@ -304,6 +304,13 @@ public class UserController
 		return "redirect:/user/"+contact.getcID()+"/contact";
 	}
 	
+	@GetMapping("/profile")
+	public String profile(Model model)
+	{
+		model.addAttribute("title","Setting Profile");
+		
+		return "normal/profile";
+	}
 	
 	
 

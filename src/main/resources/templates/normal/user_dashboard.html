@@ -4,17 +4,28 @@
 
 <section >
 
-  <div class="text-center" >
-      
-      <h1> User </h1>
-      <span th:text="${user.name}">  </span>
-      
-      <h1> 
-         This is private dashboard
-      </h1>
-  
-  </div>
+  <div class="container">
+
+      <div class="card">
+       <div class="card-body text-center my-5">
+       
+           <div class="container ">
  
+                <img class="my_profile_pic" style="height: 200px; width: 200px;" 
+                 src="" th:src="@{'/image/contact.png'}" alt="profile photo" />
+                 
+          </div>      
+          
+          <h1 class="text-center mt-3 text-secondary font-italic font-weight-light">
+              Adding Contact To Cloud...
+          </h1>     
+          
+          <a th:href="@{'/user/add-contact'}" class="btn btn-primary mt-4  text-uppercase"> Add New Contact </a>  
+       
+       </div>
+      </div>
+      
+   </div>    
 </section>
 
 </html> 

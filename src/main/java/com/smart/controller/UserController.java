@@ -18,6 +18,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +48,9 @@ public class UserController
 	
 	@Autowired
 	private ContactRepository contactRepository;
+	
+	@Autowired
+	BCryptPasswordEncoder encoder;
 	
 	
 	//method for adding common data to response
@@ -311,6 +315,53 @@ public class UserController
 		
 		return "normal/profile";
 	}
+	
+	
+	//open setting handler
+	@GetMapping("/settings")
+	public String openSetting()
+	{
+		return "normal/settings";
+	}
+	
+	
+	//change password
+	
+	@PostMapping("/changePassword")
+	public String changePassword(@RequestParam String oldPassword,@RequestParam String newPassword,Principal principal,HttpSession session) //@requestparam coz data come from page
+	{
+		
+		String name = principal.getName();
+		
+		User currentUser = this.userRepository.getUserByUsername(name);
+		   
+		  if(this.encoder.matches(oldPassword, currentUser.getPassword()))
+		  {
+			  //change the passwrod
+			  
+			  currentUser.setPassword(this.encoder.encode(newPassword));
+			  this.userRepository.save(currentUser);
+			  
+			  session.setAttribute("msg", new Message("Your Password change", "success"));
+			  
+			  
+		  }else{
+			  
+			  //old password not match
+			  session.setAttribute("msg", new Message("Your Password is incorrect", "warning"));
+			  
+			  
+			  return "redirect:/user/settings";	
+			  
+		  }
+		
+		
+		System.out.println(oldPassword);
+		System.out.println(newPassword);
+		
+		return "redirect:/user/index";	
+	}
+	
 	
 	
 

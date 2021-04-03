@@ -20,6 +20,24 @@
                          <hr class="mt-2"/>
                          
                          
+                          <!-- message box -->
+
+						<div th:if="${session.msg}" class="container">
+							<div 
+								class="alert alert-danger my-2  text-center" role="alert">
+								<span th:text="${session.msg}"></span>
+							</div>
+
+							<th:block th:text="${#session.removeAttribute('msg')}">
+
+							</th:block>
+
+						</div>
+						
+						<!-- MEsg end here -->
+                         
+                         
+                         
                          
                           <form th:action="@{/sendOTP}" method="post">
                           

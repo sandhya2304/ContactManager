@@ -5,11 +5,13 @@ import java.util.Random;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.smart.Helper.Message;
 import com.smart.dao.UserRepository;
 import com.smart.entities.User;
 import com.smart.service.EmailService;
@@ -23,6 +25,11 @@ public class ForgotController
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	
+	@Autowired
+	BCryptPasswordEncoder encoder;
+	
 	
 	
 	Random rand  = new Random(1000);
@@ -113,7 +120,22 @@ public class ForgotController
 			return "verifyotp";
 		}
 		
+	}
+	
+	@PostMapping(value="/change-password")
+	public String changePassword(@RequestParam("newPassword") String newPassword,HttpSession session)
+	{
+		String email = (String) session.getAttribute("email");
 		
+		
+		//same change password logic here
+		User user =this.userRepository.getUserByUsername(email);
+		user.setPassword(this.encoder.encode(newPassword));
+		this.userRepository.save(user);
+	
+		 //session.setAttribute("msg", new Message("Your Password change", "success"));
+	
+	     return "redirect:/signin?change=password change sucessfully";
 	}
 	
 	

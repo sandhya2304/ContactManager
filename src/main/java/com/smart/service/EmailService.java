@@ -85,7 +85,11 @@ public class EmailService
             try
             {
 
-                text.setText(message);
+                //text.setText(message);
+            	text.setContent(message,"text/html");
+               
+            	//mime.setContent(message,"text/html");
+                
 
                 File ff= new File(path);
                 file.attachFile(ff);

@@ -31,6 +31,8 @@ public class ForgotController
 	BCryptPasswordEncoder encoder;
 	
 	
+	//
+	
 	
 	Random rand  = new Random(1000);
 	

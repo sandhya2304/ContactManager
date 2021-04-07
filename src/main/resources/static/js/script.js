@@ -59,3 +59,42 @@ const search = () =>{
    }
 
 }
+
+/// first req to server to create order
+
+const paymentStart = () =>{
+	console.log("payment started....");
+	
+	var amount = $("#payment_field").val();
+	console.log(amount)
+	if(amount == '' || amount == null)
+	{
+		alert("amount is required!!!");
+		return;
+	}
+
+  // we will use ajax to send request to server
+  // to create order
+
+  $.ajax({
+	  url:'/user/create_order',
+	  data: JSON.stringify({amount:amount,info:'order_request'}),
+	  contentType: 'application/json',
+	  type: 'POST',
+	  dataType:'json',
+	  
+	  success: function(response){
+          console.log(response);
+	  },
+	  error:function(error){
+		  console.log(error);
+	  }
+  });
+
+}
+
+
+
+
+
+

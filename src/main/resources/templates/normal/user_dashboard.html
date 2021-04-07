@@ -21,6 +21,22 @@
           </h1>     
           
           <a th:href="@{'/user/add-contact'}" class="btn btn-primary mt-4  text-uppercase"> Add New Contact </a>  
+          
+          <hr/>
+          
+          <!-- Payment integration -->
+          
+          <h3 class="my-2 text-left">Donate Us</h3>
+          <input id="payment_field" type="text" class="form-control my-2" placeholder="Enter the donation amount..." />
+          
+          <div class="container">
+             <button onClick="paymentStart()" class="btn btn-success mt-3">
+                 Pay
+             </button>
+          </div>
+          
+          
+          
        
        </div>
       </div>
